@@ -1,0 +1,18 @@
+Object obj1 = Create Cube {
+        X = 2
+        Y = 1
+        Z = 0
+        Scale = 1
+}
+Object obj2 = Create Pyramid {
+    X = 0
+    Y = 0
+    Z = 0
+    Scale = 2
+}
+Object obj3 = Create Sphere {
+    X = -1
+    Y = -2
+    Z = 0
+    Scale = 1
+}
