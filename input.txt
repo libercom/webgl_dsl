@@ -1,3 +1,21 @@
+matrix m1 {
+    TranslateX(1)
+    TranslateY(-1)
+    TranslateZ(1)
+}
+
+matrix m2 {
+    TranslateX(-1)
+    TranslateY(1)
+    TranslateZ(-2)
+}
+
+matrix m3 {
+    TranslateX(2)
+    TranslateY(1)
+    TranslateZ(3)
+}
+
 Object obj1 = Create Cube {
         X = 2
         Y = 1
@@ -16,3 +34,7 @@ Object obj3 = Create Sphere {
     Z = 0
     Scale = 1
 }
+
+Transform(obj1, m1)
+Transform(obj2, m2)
+Transform(obj3, m3)

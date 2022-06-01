@@ -1,4 +1,4 @@
-// Generated from d:\Documets\Projects\test\simplerlang.g4 by ANTLR 4.8
+// Generated from d:\Documets\Projects\antlr\simplerlang.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;

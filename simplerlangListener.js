@@ -9,7 +9,8 @@ export default class simplerlangListener extends antlr4.tree.ParseTreeListener {
     constructor() {
         super();
 
-        this.state = [];
+        this.state = {};
+        this.matrices = {};
     }
 
     enterProg(ctx) {}
@@ -31,6 +32,7 @@ export default class simplerlangListener extends antlr4.tree.ParseTreeListener {
 
     // Enter a parse tree produced by simplerlangParser#var_declaration.
     enterVar_declaration(ctx) {
+        const objectId = ctx.getChild(1).getText();
         const object = {};
         const pos = {};
 
@@ -45,10 +47,9 @@ export default class simplerlangListener extends antlr4.tree.ParseTreeListener {
             .split("=")[1];
 
         object.type = ctx.getChild(3).getChild(1).getText();
-        object.id = ctx.getChild(1).getText();
         object.pos = pos;
 
-        this.state.push(object);
+        this.state[objectId] = object;
     }
 
     // Exit a parse tree produced by simplerlangParser#var_declaration.
@@ -73,7 +74,14 @@ export default class simplerlangListener extends antlr4.tree.ParseTreeListener {
     exitTransform_function(ctx) {}
 
     // Enter a parse tree produced by simplerlangParser#transform_matrix_declaration.
-    enterTransform_matrix_declaration(ctx) {}
+    enterTransform_matrix_declaration(ctx) {
+        const matrixId = ctx.getChild(1).getText();
+        const transformX = ctx.getChild(3).getChild(0).getChild(2).getText();
+        const transformY = ctx.getChild(3).getChild(1).getChild(2).getText();
+        const transformZ = ctx.getChild(3).getChild(2).getChild(2).getText();
+
+        this.matrices[matrixId] = { transformX, transformY, transformZ };
+    }
 
     // Exit a parse tree produced by simplerlangParser#transform_matrix_declaration.
     exitTransform_matrix_declaration(ctx) {}
@@ -91,7 +99,12 @@ export default class simplerlangListener extends antlr4.tree.ParseTreeListener {
     exitApply_texture_command(ctx) {}
 
     // Enter a parse tree produced by simplerlangParser#apply_transform_command.
-    enterApply_transform_command(ctx) {}
+    enterApply_transform_command(ctx) {
+        const objId = ctx.getChild(2).getText();
+        const matrixId = ctx.getChild(4).getText();
+
+        this.state[objId].transform = this.matrices[matrixId];
+    }
 
     // Exit a parse tree produced by simplerlangParser#apply_transform_command.
     exitApply_transform_command(ctx) {}

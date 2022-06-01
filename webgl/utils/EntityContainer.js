@@ -7,15 +7,16 @@ import { shuffle } from "./utilFunctions";
 
 export default function EntityContainer(parsedObjects) {
     let _entities = {};
+    let _transforms = {};
 
-    console.log("hi");
-    console.log(parsedObjects);
+    for (const po in parsedObjects) {
+        const obj = parsedObjects[po];
 
-    parsedObjects.forEach((obj) => {
-        const id = obj.id;
+        const id = po;
         const type = obj.type;
         const pos = obj.pos;
         const scale = obj.scale;
+        const transform = obj.transform;
         let object = null;
 
         if (type === "Cube") {
@@ -34,15 +35,16 @@ export default function EntityContainer(parsedObjects) {
 
         object.scale = vec3(scale, scale, scale);
 
-        console.log(object);
-
         _entities[id] = object;
-    });
+        _transforms[id] = transform;
+    }
 
     function init() {
         for (const id in _entities) {
             _entities[id].init();
         }
+
+        console.log(_entities);
     }
 
     function draw() {
@@ -51,8 +53,35 @@ export default function EntityContainer(parsedObjects) {
         }
     }
 
+    function applyTransforms() {
+        for (const id in _entities) {
+            if (_transforms[id] !== undefined) {
+                const posX = _entities[id].translation[0];
+                const posY = _entities[id].translation[1];
+                const posZ = _entities[id].translation[2];
+
+                const transformX = Number.parseInt(_transforms[id].transformX);
+                const transformY = Number.parseInt(_transforms[id].transformY);
+                const transformZ = Number.parseInt(_transforms[id].transformZ);
+
+                if (
+                    transformX !== posX &&
+                    transformY !== posY &&
+                    transformZ !== posZ
+                ) {
+                    _entities[id].translation = vec3(
+                        posX + transformX / 700,
+                        posY + transformY / 700,
+                        posZ + transformZ / 700
+                    );
+                }
+            }
+        }
+    }
+
     return {
         init,
         draw,
+        applyTransforms,
     };
 }

@@ -1,4 +1,4 @@
-// Generated from d:\Documets\Projects\test\simplerlang.g4 by ANTLR 4.8
+// Generated from d:\Documets\Projects\antlr\simplerlang.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
