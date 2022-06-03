@@ -52,10 +52,12 @@ apply_transform_command: 'Transform' '(' ID ',' ID ')'
 object_props: object_prop+
     ;
 
-object_prop: prop_name '=' ID | prop_name '=' NUM
+object_prop: prop_name '=' ID | prop_name '=' NUM | prop_name '=' color_type
     ;
 
-prop_name: 'X' | 'Y' | 'Z' | 'Radius' | 'Scale';
+prop_name: 'X' | 'Y' | 'Z' | 'Radius' | 'Scale' | 'Color';
+
+color_type: 'Red' | 'Blue' | 'Black';
 
 object_type: 'Triangle'
     | 'Cube'
